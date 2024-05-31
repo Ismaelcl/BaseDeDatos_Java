@@ -64,6 +64,30 @@ public class Dao {
         return (existe);
 
     }
+    
+    public boolean usuarioTieneTareas (String nombre) throws SQLException{
+         Connection c = conectar();
+        Statement st = c.createStatement();
+        String consulta = "Select count(*) as total from task where user='"+ nombre+ "';";
+        ResultSet rs = st.executeQuery(consulta);
+        boolean existe = false;
+        if (rs.next()) {
+            int total = rs.getInt("total");
+            if(total > 0){
+                existe=true;
+            }
+                  
+                
+        }
+        
+        
+      
+        rs.close();
+        st.close();
+        desconectar(c);
+        return (existe);
+        
+    }
 
     public void insertarTasca(String nomUsuari, String titulo, String contenido) throws SQLException {
         Connection c = conectar();
