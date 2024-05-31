@@ -9,7 +9,19 @@ package Modelo;
  * @author Javier Morcillo
  */
 public class Usuari {
-
+    
+    private String nombreUsuario;
+    private String paraulaPas;
+    private String nomComplet;
+    private int edat;
+    
+    public Usuari(String nombreUsuario, String paraulaPas, String nomComplet, int edat){
+        this.nombreUsuario=nombreUsuario;
+        this.paraulaPas=paraulaPas;
+        this.nomComplet=nomComplet;
+        this.edat=edat;
+    }
+    
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -41,17 +53,5 @@ public class Usuari {
     public void setEdat(int edat) {
         this.edat = edat;
     }
-    private String nombreUsuario;
-    private String paraulaPas;
-    private String nomComplet;
-    private int edat;
-    
-    public Usuari(String nombreUsuario, String paraulaPas, String nomComplet, int edat){
-    this.nombreUsuario=nombreUsuario;
-    this.paraulaPas=paraulaPas;
-    this.nomComplet=nomComplet;
-    this.edat=edat;
-}
-            
     
 }
