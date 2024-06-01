@@ -120,7 +120,7 @@ public class Dao {
         ArrayList<Tasca> tasques = new ArrayList();
         Connection c = conectar();
         Statement s = c.createStatement();
-        String operacion = ("Select * from task where user='" + nombreUsuari + "';");
+        String operacion = ("Select coutn(*) as total);
         ResultSet rs = s.executeQuery(operacion);
         while (rs.next()) {
             int idTask = rs.getInt("idtask");
@@ -136,4 +136,6 @@ public class Dao {
             desconectar(c);
         return tasques;
     }
+    
+    
 }
