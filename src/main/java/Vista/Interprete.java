@@ -11,6 +11,7 @@ import Persistencia.Dao;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.sql.Date;
 import java.sql.SQLException;
 
@@ -75,11 +76,13 @@ public class Interprete {
                      throw new AppException(6);
             }
             System.out.println("TASQUES DE: "+nombreUsuari+"\n ");
-            for (Tasca t: d.listarInfoUsuari(nombreUsuari)){
+            ArrayList<Tasca> Tareas2 = new ArrayList();
+           Tareas2 = d.listarInfoUsuari(nombreUsuari);
+            
+            for (Tasca t: Tareas2){
                 System.out.println(t.toString()); 
-                
             }
-            System.out.println("Total: "+d.contarTasquesUser(nombreUsuari));
+            System.out.println("Total:  "+Tareas2.size());
 }
         public void verUsuariosTasaquesPendents() throws SQLException{
             System.out.println("---  USUARIS AMB TASQUES PENDENTS---");
