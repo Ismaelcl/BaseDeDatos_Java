@@ -52,6 +52,16 @@ public class Usuari {
     this.nomComplet=nomComplet;
     this.edat=edat;
 }
+    public Usuari(String nombreUsuario, String nomComplet, int edat){
+        this.nombreUsuario=nombreUsuario;
+        this.nomComplet=nomComplet;
+        this.edat=edat;
+    }
+            @Override
+            public String toString(){
+                String s=getNombreUsuario()+" ( "+getNomComplet()+" -  Edat: "+ getEdat()+"\n";
+                return s;
+            }
             
     
 }

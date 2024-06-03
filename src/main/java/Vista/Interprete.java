@@ -5,6 +5,7 @@
 package Vista;
 
 import Exception.AppException;
+import Modelo.Tasca;
 import Modelo.Usuari;
 import Persistencia.Dao;
 import java.io.BufferedReader;
@@ -63,10 +64,29 @@ public class Interprete {
             throw new AppException(6);
         
         }
+            if(!d.usuarioTieneTareas(nomUsuari)){
+                throw new AppException(7);
+            }
             d.deleteUsuari(nomUsuari);
             System.out.println("El propietario " + nomUsuari + " ha sido eliminado del registro.");
         }
-        public void listarInfoUsuari(String nombreUsuari) throws SQLException{
-            System.out.println(d.listarInfoUsuari(nombreUsuari));
+        public void listarInfoUsuari(String nombreUsuari) throws SQLException, AppException{
+            if (!d.existeUsuari(nombreUsuari)){
+                     throw new AppException(6);
+            }
+            System.out.println("TASQUES DE: "+nombreUsuari+"\n ");
+            for (Tasca t: d.listarInfoUsuari(nombreUsuari)){
+                System.out.println(t.toString()); 
+                
+            }
+            System.out.println("Total: "+d.contarTasquesUser(nombreUsuari));
 }
+        public void verUsuariosTasaquesPendents() throws SQLException{
+            System.out.println("---  USUARIS AMB TASQUES PENDENTS---");
+            for(Usuari u:d.verUsuariosTasaquesPendents()){
+                System.out.println(u.toString()); 
+            }
+            System.out.println("--------------------------------------------------");
+        }
+                
 }

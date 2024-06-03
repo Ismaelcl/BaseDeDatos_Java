@@ -10,6 +10,22 @@ package Modelo;
  */
 public class Tasca {
 
+    public int getIdtask() {
+        return idtask;
+    }
+
+    public void setIdtask(int idtask) {
+        this.idtask = idtask;
+    }
+
+    public boolean isBit() {
+        return bit;
+    }
+
+    public void setBit(boolean bit) {
+        this.bit = bit;
+    }
+
     public String getNomUsuari() {
         return nomUsuari;
     }
@@ -46,7 +62,7 @@ public class Tasca {
     }
     @Override
         public String toString(){
-            String s="Titulo"+getTitulo()+" Contenido" +getContenido()+ " Mascotas ";
-            return s;
+            String s=getIdtask()+": "+getTitulo()+" - "+getContenido()+" - ";
+            return(bit ? s+"COMPLETADA \n": s+"PER FER \n");
         }
 }

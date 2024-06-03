@@ -50,6 +50,14 @@ public class Main {
                         case "I":
                             i.checkArgs(argumentos, 2);
                             i.listarInfoUsuari(argumentos[1]);
+                            
+                                    break;
+                                    
+                        case "V":
+                            i.checkArgs(argumentos, 2);
+                            i.verUsuariosTasaquesPendents();
+                            
+                                    break;
                         
                         case "X":
                             menu = false;

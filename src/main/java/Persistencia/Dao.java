@@ -68,16 +68,11 @@ public class Dao {
     public boolean usuarioTieneTareas (String nombre) throws SQLException{
          Connection c = conectar();
         Statement st = c.createStatement();
-        String consulta = "Select count(*) as total from task where user='"+ nombre+ "';";
+        String consulta = "Select * from task where user='"+ nombre+ "';";
         ResultSet rs = st.executeQuery(consulta);
         boolean existe = false;
         if (rs.next()) {
-            int total = rs.getInt("total");
-            if(total > 0){
-                existe=true;
-            }
-                  
-                
+            existe=true;
         }
         
         
@@ -91,10 +86,11 @@ public class Dao {
 
     public void insertarTasca(String nomUsuari, String titulo, String contenido) throws SQLException {
         Connection c = conectar();
-        PreparedStatement ps = c.prepareStatement("insert into task values (null,?,?,?,false)");
+        PreparedStatement ps = c.prepareStatement("insert into task (user, title, content, done) values (?,?,?,?)");
         ps.setString(1, nomUsuari);
         ps.setString(2, titulo);
         ps.setString(3, contenido);
+        ps.setBoolean(4, false);
         ps.executeUpdate();
         ps.close();
         desconectar(c);
@@ -102,9 +98,6 @@ public class Dao {
     }
 
     public void deleteUsuari(String nombreUsuari) throws SQLException {
-        if (!existeUsuari(nombreUsuari)) {
-            return;
-        }
         Connection c = conectar();
         PreparedStatement ps = c.prepareStatement("Delete from username where nombre='" + nombreUsuari + "';");
         ps.executeUpdate();
@@ -114,13 +107,10 @@ public class Dao {
     }
 
     public ArrayList<Tasca> listarInfoUsuari(String nombreUsuari) throws SQLException {
-        if (!existeUsuari(nombreUsuari)) {
-            return null;
-        }
         ArrayList<Tasca> tasques = new ArrayList();
         Connection c = conectar();
         Statement s = c.createStatement();
-        String operacion = ("Select coutn(*) as total);
+        String operacion = "SELECT * from task where user='"+nombreUsuari+"';";
         ResultSet rs = s.executeQuery(operacion);
         while (rs.next()) {
             int idTask = rs.getInt("idtask");
@@ -136,6 +126,40 @@ public class Dao {
             desconectar(c);
         return tasques;
     }
+    public int contarTasquesUser(String nombreUsuari) throws SQLException{
+        Connection c = conectar();
+        Statement s = c.createStatement();
+        String operacion = "SELECT count(*) as c from task where user='"+nombreUsuari+"';";
+        ResultSet rs = s.executeQuery(operacion);
+        int contar=(rs.next() ? rs.getInt("c"): null);
+        rs.close();
+        s.close();
+        desconectar(c);
+        return contar;
+    }
+    
+    public ArrayList<Usuari> verUsuariosTasaquesPendents() throws SQLException{
+        ArrayList<Usuari>usuariosPendents=new ArrayList();
+        Connection c = conectar();
+        Statement s = c.createStatement();
+        String nombreUsuari;
+        ResultSet rs = s.executeQuery("SELECT u.username, u.name, u.age FROM user u, task t WHERE u.username=t.user and t.done=0;");
+        while (rs.next()){
+            String username=rs.getString("username");
+            String name=rs.getString("name");
+            int edad=rs.getInt("age");
+            Usuari u1=new Usuari(username, name, edad);
+            usuariosPendents.add(u1);
+            
+        }
+        rs.close();
+        s.close();
+        desconectar(c);
+        return usuariosPendents;
+    }
+    
+   
+
     
     
 }
